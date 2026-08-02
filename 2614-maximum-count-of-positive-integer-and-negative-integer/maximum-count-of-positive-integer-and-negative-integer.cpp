@@ -1,15 +1,33 @@
 class Solution {
 public:
     int maximumCount(vector<int>& nums) {
-        int countneg = 0;
-        int countpos = 0;
+        int n = nums.size();
 
-        for(int i=0;i<=nums.size()-1;i++){
-        if(nums[i]>0)
-        countpos++;
-        if(nums[i]<0)
-        countneg++;
-    }
-    return max(countpos,countneg);
+        
+        int left = 0, right = n - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] < 0)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        int negativeCount = left;
+
+      
+        left = 0;
+        right = n - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] <= 0)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        int positiveCount = n - left;
+
+        return max(negativeCount, positiveCount);
     }
 };
